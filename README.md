@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here is a clean, professional README.md for your project. This is designed to help you (or any other admin) understand how to maintain it and what's happening "under the hood."
 
-## Getting Started
+🛡️ LTE Care Plus: Session Report Portal
+A secure, high-performance web portal built with Next.js 14 that allows staff members to verify their identity and receive automated session reports via email.
 
-First, run the development server:
+🚀 Features
+Real-time Sheet Lookup: Connects directly to Google Sheets to verify flagged sessions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Secure Delivery: Uses Resend to bypass spam filters and deliver reports to personal emails.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Modern UI: Glassmorphism design with Tailwind CSS, Lucide icons, and Sonner notifications.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Data Normalization: Automatically handles phone number formatting and name case-sensitivity to ensure accurate matches.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🛠️ Tech Stack
+Framework: Next.js (App Router)
 
-## Learn More
+Database: Google Sheets API (v4)
 
-To learn more about Next.js, take a look at the following resources:
+Email: Resend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Styling: Tailwind CSS + Lucide Icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Notifications: Sonner (Toasts)
 
-## Deploy on Vercel
+📋 Environment Variables
+To run this project, you must add a .env.local file with the following keys:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Bash
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Google Sheets Configuration
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@project.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYourKeyHere\n-----END PRIVATE KEY-----"
+GOOGLE_SHEET_ID=your_long_sheet_id_here
+
+# Email Configuration
+RESEND_API_KEY=re_your_api_key
+📂 Project Structure
+/app/api/report/route.js: The "brain" of the app. Handles sheet filtering and email triggers.
+
+/components/verify-form.js: The frontend form with validation and loading states.
+
+/lib/google.js: Helper file to initialize the Google Auth client.
+
+⚙️ Logic & Outliers
+Name Matching: The system joins LastName, FirstName and converts to lowercase before comparing to Column J (Index 9) of the spreadsheet.
+
+Phone Matching: All non-numeric characters are stripped. The system compares the last 10 digits to ensure compatibility with international or local formatting in the Sheet.
+
+Rate Limiting: The Resend Free tier allows 100 emails/day. For a staff of 3,000, keep an eye on usage in the Resend dashboard.
+
+🛠️ Maintenance
+Updating Data: Simply update the Google Sheet named Flagged_1/10. The app fetches live data on every request.
+
+Domain Verification: If emails stop sending, check the Resend Dashboard to ensure the DNS records (DKIM/SPF) are still "Verified."
