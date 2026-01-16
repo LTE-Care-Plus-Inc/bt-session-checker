@@ -59,7 +59,7 @@ export async function POST(req) {
       <tr>
         <td style="border-bottom:1px solid #ddd; padding:8px;">${s[7] || 'N/A'}</td>
         <td style="border-bottom:1px solid #ddd; padding:8px;">${s[8] || 'N/A'}</td>
-        <td style="border-bottom:1px solid #ddd; padding:8px; color:#d32f2f;">${s[26] || 'Reason not listed'}</td>
+        <td style="border-bottom:1px solid #ddd; padding:8px; color:#d32f2f;">${s[28] || 'Reason not listed'}</td>
       </tr>
     `).join('');
 
