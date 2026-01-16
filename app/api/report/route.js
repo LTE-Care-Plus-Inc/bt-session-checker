@@ -66,7 +66,7 @@ export async function POST(req) {
     // 6. Send Email
     await resend.emails.send({
       from: 'LTE Care Plus <reports@ltecareplus.org>',
-      to: "jseet@ltecareplus.org",
+      to: email,
       subject: 'Urgent: Flagged Session Report',
       html: `
         <div style="font-family: Arial, sans-serif;">
