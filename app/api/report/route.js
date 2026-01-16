@@ -39,8 +39,8 @@ export async function POST(req) {
 
       // Using your specific indices: 9 (Name), 10 (Phone), 11 (Email)
       const sheetName = row[9]?.toString().toLowerCase().trim() || "";
-      const sheetPhone = row[10]?.toString().replace(/\D/g, '');    
-      const sheetEmail = row[11]?.toString().toLowerCase().trim(); 
+      const sheetPhone = row[12]?.toString().replace(/\D/g, '');    
+      const sheetEmail = row[13]?.toString().toLowerCase().trim(); 
       const inputPhone = phone.replace(/\D/g, '');
 
       return (
@@ -66,7 +66,7 @@ export async function POST(req) {
     // 6. Send Email
     await resend.emails.send({
       from: 'LTE Care Plus <reports@ltecareplus.org>',
-      to: 'jseet@ltecareplus.org',
+      to: "jseet@ltecareplus.org",
       subject: 'Urgent: Flagged Session Report',
       html: `
         <div style="font-family: Arial, sans-serif;">
@@ -91,4 +91,6 @@ export async function POST(req) {
     console.error("API Error:", error);
     return Response.json({ error: error.message }, { status: 500 });
   }
+
+  
 }
