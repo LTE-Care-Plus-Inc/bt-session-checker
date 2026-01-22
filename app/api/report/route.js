@@ -5,15 +5,34 @@ import { google } from 'googleapis';
 // -----------------------------
 function toInitials(name) {
   if (!name) return "N/A";
-  return name
-    .toString()
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .map(part => part[0]?.toUpperCase())
-    .filter(Boolean)
-    .join(".") + ".";
+
+  const raw = name.toString().trim();
+  if (!raw) return "N/A";
+
+  // If format is "Last, First ..."
+  if (raw.includes(",")) {
+    const [lastPart, firstPart] = raw.split(",", 2);
+    const last = (lastPart || "").trim();
+    const first = (firstPart || "").trim();
+
+    const firstInitial = first ? first[0].toUpperCase() : "";
+    const lastInitial = last ? last[0].toUpperCase() : "";
+
+    if (firstInitial && lastInitial) return `${firstInitial}.${lastInitial}.`;
+    if (firstInitial) return `${firstInitial}.`;
+    if (lastInitial) return `${lastInitial}.`;
+    return "N/A";
+  }
+
+  // Otherwise assume "First Last ..."
+  const parts = raw.split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return `${parts[0][0].toUpperCase()}.`;
+
+  const firstInitial = parts[0][0].toUpperCase();
+  const lastInitial = parts[parts.length - 1][0].toUpperCase();
+  return `${firstInitial}.${lastInitial}.`;
 }
+
 
 function encodeMessage(message) {
   return Buffer.from(message)
